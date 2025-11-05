@@ -1,75 +1,52 @@
-@startuml EcoRide Class Diagram
-
-' Enable arrow directions
-skinparam linetype ortho
-
-' Abstract Person class
-abstract class Person {
-  -id: String
-  -name: String
-  -email: String
-  -phone: String
-}
-
-' Abstract Vehicle class
-abstract class Vehicle {
-  -id: String
-  -brand: String
-  -model: String
-  -year: int
-  -batteryCapacity: double
-  -licensePlate: String
-}
-
-' Driver class
-class Driver {
-  -licenseNumber: String
-  -experienceYears: int
-}
-
-' Passenger class
-class Passenger {
-  -membershipLevel: String
-  -totalTrips: int
-}
-
-' Car class
-class Car {
-  -numberOfDoors: int
-  -seatingCapacity: int
-}
-
-' Scooter class
-class Scooter {
-  -maxSpeed: double
-  -weight: double
-}
-
-' Trip class
-class Trip {
-  -id: String
-  -driverId: String
-  -vehicleId: String
-  -distance: double
-  -startTime: LocalDateTime
-  -endTime: LocalDateTime
-  -origin: String
-  -destination: String
-}
-
-' Inheritance relationships
-Person <|-- Driver
-Person <|-- Passenger
-Vehicle <|-- Car
-Vehicle <|-- Scooter
-
-' Association relationships
-Driver "1" -- "*" Trip : drives
-Vehicle "1" -- "*" Trip : usedIn
-Passenger "1" -- "*" Trip : takes
-
-' Add notes
-note right of Person: Abstract base class for all people in the system
-note bottom of Vehicle: Abstract base class for all vehicle types
-
-@enduml
+classDiagram
+    class Person {
+        <<Abstract>>
+        -String id
+        -String name
+        -String email
+    }
+    
+    class Driver {
+        -String licenseNumber
+        -int experienceYears
+    }
+    
+    class Passenger {
+        -String membershipLevel
+        -int totalTrips
+    }
+    
+    class Vehicle {
+        <<Abstract>>
+        -String id
+        -String brand
+        -String model
+    }
+    
+    class Car {
+        -int numberOfDoors
+        -int seatingCapacity
+    }
+    
+    class Scooter {
+        -double maxSpeed
+        -double weight
+    }
+    
+    class Trip {
+        -String id
+        -String driverId
+        -String vehicleId
+        -double distance
+        -LocalDateTime startTime
+        -LocalDateTime endTime
+        -String origin
+        -String destination
+    }
+    
+    Person <|-- Driver
+    Person <|-- Passenger
+    Vehicle <|-- Car
+    Vehicle <|-- Scooter
+    Trip --> "1" Driver : has
+    Trip --> "1" Vehicle : uses
